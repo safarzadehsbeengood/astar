@@ -84,8 +84,8 @@ function Node(i, j) {
 }
 
 function setup() {
-  var cnv = createCanvas(800, 800);
-  randomSeed(3);
+  var cnv = createCanvas(600, 600);
+  // randomSeed(3);
   var x = (windowWidth - width) / 2;
   var y = (windowHeight - height) / 2;
   cnv.position(x, y);
@@ -141,7 +141,6 @@ function draw() {
       noLoop();
       console.log("DONE");
       end.show(color(255,0,255));
-
       return;
     }
     removeFromArray(q, openSet); // remove current node from open set
@@ -222,6 +221,7 @@ function reset() {
     }
     delete[grid[i]];
   }
+  delete grid;
 }
 
 document.getElementById("reset").onclick = () => {
