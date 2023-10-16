@@ -15,7 +15,7 @@ canvas {
   display: block;
 }
 
-#reset {
+#reset, #home {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -23,7 +23,6 @@ canvas {
   margin: 0px;
   position: absolute;
   top: 0px;
-  left: 0px;
   text-decoration: none;
   background: transparent;
   border: none;
@@ -34,8 +33,14 @@ canvas {
   font-size: 1.5em;
   font-family:"JetbrainsMono", monospace;
 }
+#home {
+  left: 0px;
+}
+#reset {
+  right: 0px;
+}
 
-#reset:hover {
+#reset:hover, #home:hover {
   cursor: pointer;
   background: rgba(128, 128, 128, 0.616);
 }
