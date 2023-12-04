@@ -37,7 +37,7 @@ function Node(i, j) {
   this.i = i; // column
   this.j = j; // row
   this.wall = false;
-  if (random(1) < 0.3) {
+  if (random(1) < 0.2) {
     this.wall = true;
   }
   this.neighbors = [];
@@ -71,20 +71,27 @@ function Node(i, j) {
     }
   }
 
-  this.show = function(col) {
+  this.show = function(color) {
     if (this.wall) {
-      fill(153, 76, 0);
+      fill(150);
       noStroke();
       ellipse(this.i * w + w / 2, this.j * h + h / 2, w / 2, h / 2);
-    } else if (col) {
-      fill(col);
-      rect(this.i * w, this.j * h, w, h);
+    } else if (color) {
+      fill(color);
+      noStroke();
+      ellipse(this.i * w, this.j * h, w, h);
     }
   }
 }
 
 function setup() {
-  var cnv = createCanvas(600, 600);
+  // frameRate(10);
+  var cnv;
+  if (windowWidth > windowHeight) {
+    cnv = createCanvas(windowHeight / 2 + 200, windowHeight / 2 + 200);
+  } else {
+    cnv = createCanvas(windowWidth / 2 + 200, windowWidth / 2 + 200);
+  }
   // randomSeed(3);
   var x = (windowWidth - width) / 2;
   var y = (windowHeight - height) / 2;
@@ -120,7 +127,6 @@ function setup() {
 }
 
 function draw() {
-  
   if (openSet.length > 0) {
     // find node with lowest f in open set
     var lowest = 0;
@@ -140,7 +146,16 @@ function draw() {
     if (q === end) {
       noLoop();
       console.log("DONE");
-      end.show(color(255,0,255));
+      beginShape();
+      noFill();
+      stroke(252, 238, 33);
+      strokeWeight(w / 4);
+      vertex(path[0].i * w + w / 2, path[0].j * h + h / 2);
+      vertex(end.i * w + w / 2, end.j * h + h / 2);
+      endShape();
+      fill(0, 255, 0);
+      stroke(0);
+      ellipse(end.i * w, end.j * h, 10, 10);
       return;
     }
     removeFromArray(q, openSet); // remove current node from open set
@@ -170,10 +185,11 @@ function draw() {
         }
       }
     }
-
+    
   } else {
     console.log("no solution");
     noLoop();
+    end.show(color(255, 0, 0));
     return;
   }
   background(0);
@@ -183,6 +199,9 @@ function draw() {
       grid[i][j].show(color(0));
     }
   }
+  noFill();
+  stroke(255);
+  rect(0, 0, height, width);
 
   // for (var i = 0; i < closedSet.length; i++) {
   //   closedSet[i].show(color(255, 0, 0));
@@ -207,8 +226,11 @@ function draw() {
     vertex(path[i].i * w + w / 2, path[i].j * h + h / 2);
   }
   endShape();
-  start.show(color(50,50,255));
-  end.show(color(255,255,255));
+
+  fill(color(255));
+  stroke(0);
+  ellipse(start.i * w, start.j * h, 10, 10); // start
+  ellipse(end.i * w, end.j * h, 10, 10);  // end
 }
 
 function reset() {
